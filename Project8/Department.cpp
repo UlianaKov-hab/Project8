@@ -53,4 +53,66 @@ void Department::DeleteWorker(int dismiss)
 	CountWorker--;
 }
 
+void Department::FindWorker(Department* departments)
+{
+	string FirstNameFind;
+	string LastNameFind;
+	int PersonalNumberFind;
+
+	cout << "Enter information about the worker to search:"<<endl;
+	cout << "First name: ";
+	cin >> FirstNameFind;	
+	cout << "Last name: ";
+	cin >> LastNameFind;	
+	cout << "Personal number: ";
+	cin >> PersonalNumberFind;	
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < CountWorker; j++)
+		{
+			if (departments[i].workers[j].PersonalNumber == PersonalNumberFind)
+			{
+				departments[i].workers[j].PrintWorker();
+			}			
+		}
+	}
+	
+	//FirstNameFind == workers->FirstName /*&& LastNameFind == workers->LastName && PersonalNumberFind == workers->PersonalNumber*/
+}
+
+void Department::DepartmentData(Department* departments)
+{
+	int count_no_worked_deys = 0;
+	int count_worked_hours = 0;
+	int number;
+	int month;
+	cout << "Enter number of department";
+	cin >> number;
+	cout << "Enter number of month";
+	cin >> month;
+	for (int i = 0; i < 5; i++)
+	{
+		if (i != number)
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = 0; j < CountWorker; j++)
+			{
+				for (int m = 0; m < 12; m++)
+				{
+					count_no_worked_deys += departments[number].workers[j].NumberDaysNoWorked[month-1];
+					count_worked_hours += departments[number].workers[j].NumberHoursWorked[month - 1];
+				}
+			}
+		}
+	}
+	cout << "Department " << number << endl;
+	cout << "Number of hours worked:  " << count_no_worked_deys << endl;
+	cout << "Number of days not worked:  " << count_worked_hours << endl;
+
+}
+
 

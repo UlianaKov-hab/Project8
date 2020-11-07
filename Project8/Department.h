@@ -14,5 +14,7 @@ struct Department
 	void PrintDepartment();
 	void AddWorker();
 	void DeleteWorker(int dismiss);
+	void FindWorker(Department* departments);
+	void DepartmentData(Department* departments);
 
 };
