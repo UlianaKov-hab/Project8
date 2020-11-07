@@ -10,11 +10,17 @@ void main()
 	for (int i = 0; i < 5; i++)
 	{
 		departments[i].CreateDepartment();
-		cout << "Department number # ";
+		/*cout << "Department number # ";
 		cout << i+1 << endl;
-		departments[i].PrintDepartment();
+		departments[i].PrintDepartment();*/
 	}
-	
-	
+	int num;
+	cout << "Enter number of department";
+	cin >> num;
+	departments[num].PrintDepartment();
+	int dismiss;
+	cout << "Enter PersonalNumber of worker" << endl;
+	cin >> dismiss;	
+	departments->DeleteWorker(dismiss);
 
 }

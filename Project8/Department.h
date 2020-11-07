@@ -13,5 +13,6 @@ struct Department
 	void CreateDepartment();
 	void PrintDepartment();
 	void AddWorker();
+	void DeleteWorker(int dismiss);
 
 };
