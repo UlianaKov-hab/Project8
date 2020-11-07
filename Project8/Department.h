@@ -12,5 +12,6 @@ struct Department
 	Worker* workers;	
 	void CreateDepartment();
 	void PrintDepartment();
+	void AddWorker();
 
 };

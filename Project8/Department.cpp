@@ -2,7 +2,7 @@
 
 void Department::CreateDepartment()
 {
-	CountWorker = 3 + rand() % 7;
+	CountWorker = 1 + rand() % 5;
 	workers = new Worker[CountWorker];
 	for (int i = 0; i < CountWorker; i++)
 	{
@@ -13,6 +13,7 @@ void Department::CreateDepartment()
 
 void Department::PrintDepartment()
 {
+	
 	for (int i = 0; i < CountWorker; i++)
 	{
 		workers[i].PrintWorker();
@@ -20,3 +21,10 @@ void Department::PrintDepartment()
 	}
 	cout << "----------------------------------" << endl;
 }
+
+void Department::AddWorker()
+{
+
+}
+
+
