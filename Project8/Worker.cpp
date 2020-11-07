@@ -13,10 +13,10 @@ void Worker::CreateWorker()
 	LastName = ln[b];
 	Position = pos[c];
 	PersonalNumber = 4789 + rand() % 5639;
-	for (int j=0; j < 12; j++)
+	for (int i; i < 12; i++)
 	{
-		NumberHoursWorked[j] = 100 + rand() % 164;
-		NumberDaysWorked[j] = 1+rand() % 22;
+		NumberHoursWorked[i] = 10 + rand() % 164;
+		NumberDaysWorked[i] = rand() % 22;
 	}
 	
 }
@@ -27,14 +27,14 @@ void Worker::PrintWorker()
 	cout << "Last Name: " << LastName << endl;
 	cout << "Position: " << Position << endl;
 	cout << "Personal number: " << PersonalNumber << endl;
-	cout << "Hours worked per month: ";
-	for (int i=0; i < 12; i++)
+	cout << " Hours worked per month: ";
+	for (int i; i < 12; i++)
 	{
 		cout << NumberHoursWorked[i] << " ";
 	}
 	cout << endl;
-	cout << "Worked days in a month: ";
-	for (int i=0; i < 12; i++)
+	cout << " Worked days in a month: ";
+	for (int i; i < 12; i++)
 	{
 		cout << NumberDaysWorked[i] << " ";
 	}
