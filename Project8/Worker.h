@@ -2,7 +2,6 @@
 #include<iostream>
 #include<string>
 #include<time.h>
-#include<iomanip>
 using namespace std;
 struct Worker
 {
@@ -11,7 +10,7 @@ struct Worker
 	string Position;
 	int PersonalNumber;
 	int NumberHoursWorked[12];
-	int NumberDaysNoWorked[12];
+	int NumberDaysWorked[12];
 	
 	void CreateWorker();
 	void PrintWorker();
