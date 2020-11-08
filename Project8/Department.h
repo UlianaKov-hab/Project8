@@ -16,5 +16,7 @@ struct Department
 	void DeleteWorker(int dismiss);
 	void FindWorker(Department* departments);
 	void DepartmentData(Department* departments);
+	void Average_amount_no_worked_day_depart_per_year(Department* departments);
+	void Count_no_worked_day_by_month(Department* departments);
 
 };

@@ -1,6 +1,6 @@
 #include "Department.h"
 
-void Department::CreateDepartment()
+void Department::CreateDepartment() //1
 {
 	CountWorker = 1 + rand() % 5;
 	workers = new Worker[CountWorker];
@@ -11,7 +11,7 @@ void Department::CreateDepartment()
 	
 }
 
-void Department::PrintDepartment()
+void Department::PrintDepartment() //2
 {	
 	for (int i = 0; i < CountWorker; i++)
 	{
@@ -21,7 +21,7 @@ void Department::PrintDepartment()
 	cout << "----------------------------------" << endl;
 }
 
-void Department::AddWorker()
+void Department::AddWorker() //3
 {
 	Worker* workers1 = new Worker[CountWorker+1];
 	for (int i = 0; i < CountWorker; i++)
@@ -34,7 +34,7 @@ void Department::AddWorker()
 	workers = workers1;
 }
 
-void Department::DeleteWorker(int dismiss)
+void Department::DeleteWorker(int dismiss) //4
 {
 	Worker* workers1 = new Worker[CountWorker - 1];
 	for (int i = 0; i < CountWorker; i++)
@@ -53,7 +53,7 @@ void Department::DeleteWorker(int dismiss)
 	CountWorker--;
 }
 
-void Department::FindWorker(Department* departments)
+void Department::FindWorker(Department* departments) //6
 {
 	string FirstNameFind;
 	string LastNameFind;
@@ -81,9 +81,8 @@ void Department::FindWorker(Department* departments)
 	//FirstNameFind == workers->FirstName /*&& LastNameFind == workers->LastName && PersonalNumberFind == workers->PersonalNumber*/
 }
 
-void Department::DepartmentData(Department* departments)
+void Department::DepartmentData(Department* departments) //7
 {
-	int count_no_worked_deys = 0;
 	int count_worked_hours = 0;
 	int number;
 	int month;
@@ -93,7 +92,7 @@ void Department::DepartmentData(Department* departments)
 	cin >> month;
 	for (int i = 0; i < 5; i++)
 	{
-		if (i != number)
+		if (i != (number-1))
 		{
 			continue;
 		}
@@ -102,17 +101,75 @@ void Department::DepartmentData(Department* departments)
 			for (int j = 0; j < CountWorker; j++)
 			{
 				for (int m = 0; m < 12; m++)
-				{
-					count_no_worked_deys += departments[number].workers[j].NumberDaysNoWorked[month-1];
-					count_worked_hours += departments[number].workers[j].NumberHoursWorked[month - 1];
+				{					
+					count_worked_hours += departments[number-1].workers[j].NumberHoursWorked[month - 1];
 				}
 			}
 		}
 	}
 	cout << "Department " << number << endl;
-	cout << "Number of hours worked:  " << count_no_worked_deys << endl;
-	cout << "Number of days not worked:  " << count_worked_hours << endl;
+	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;	
+}
 
+void Department::Average_amount_no_worked_day_depart_per_year(Department* departments) //9
+{
+	int nembe_department;
+	float sum;
+	float average_amount_no_worked_day_depart[5];
+	for (int i = 0; i < 5; i++)
+	{
+		sum = 0;
+		for (int j = 0; j < CountWorker; j++)
+		{
+			for (int m = 0; m < 12; m++)
+			{
+				sum+= departments[i].workers[j].NumberDaysNoWorked[m];
+			}
+		}
+		average_amount_no_worked_day_depart[i] = sum/ CountWorker/12;
+	}
+	cout << "Enter number of department: ";
+	cin >> nembe_department;
+	cout << "Average amount no worked day in department " << nembe_department << " per year: " << average_amount_no_worked_day_depart[nembe_department - 1];
+}
+
+void Department::Count_no_worked_day_by_month(Department* departments) //10
+{
+	int no_worked_day_by_month[5][12];
+	int sum;
+	for (int i = 0; i < 5; i++)
+	{		
+		sum = 0;
+		for (int m = 0; m < 12; m++)
+		{
+			sum;
+			for (int j = 0; j < CountWorker; j++)
+			{
+				sum+= departments[i].workers[j].NumberDaysNoWorked[m];
+			}
+			no_worked_day_by_month[i][m] = sum;
+		}			
+	}
+	cout << "Number no worked days per mohths";
+	
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "Depaptment "<<i+1 << endl;
+		for (int m = 0; m < 12; m++)
+		{
+			cout<<setw(2)<<no_worked_day_by_month[i][m];
+		}
+	}
 }
 
 
+//for (int i = 0; i < 5; i++)
+//{
+//	for (int j = 0; j < CountWorker; j++)
+//	{
+//		for (int m = 0; m < 12; m++)
+//		{
+//
+//		}
+//	}
+//}
