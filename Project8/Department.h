@@ -18,5 +18,6 @@ struct Department
 	void DepartmentData(Department* departments);
 	void Average_amount_no_worked_day_depart_per_year(Department* departments);
 	void Count_no_worked_day_by_month(Department* departments);
+	void Count_no_worked_day_per_year(Department* departments);
 
 };

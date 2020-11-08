@@ -159,7 +159,25 @@ void Department::Count_no_worked_day_by_month(Department* departments) //10
 		{
 			cout<<setw(2)<<no_worked_day_by_month[i][m];
 		}
+		cout << endl;
 	}
+}
+
+void Department::Count_no_worked_day_per_year(Department* departments)
+{
+	int count_no_worked_day_per_year=0;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < CountWorker; j++)
+		{
+			for (int m = 0; m < 12; m++)
+			{
+				count_no_worked_day_per_year+= departments[i].workers[j].NumberDaysNoWorked[m];
+			}
+		}
+	}
+	cout << "Total days not worked: " << count_no_worked_day_per_year << endl;
+
 }
 
 
