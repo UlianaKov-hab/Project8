@@ -20,18 +20,18 @@ void Department::PrintDepartment() //2
 	}
 	cout << "----------------------------------" << endl;
 }
-//void AddWorker(Department* departments, int index) //3
-//{
-//	Worker* workers1 = new Worker[departments[index].CountWorker+1];
-//	for (int i = 0; i < departments[index].CountWorker; i++)
-//	{
-//		workers1[i]= departments[index].workers[i];
-//	}
-//	workers1[departments[index].CountWorker].CreateWorker();
-//	delete[] departments[index].workers;
-//	departments[index].CountWorker++;
-//	departments[index].workers = workers1;
-//}
+void AddWorker(Department* departments, int index) //3
+{
+	Worker* workers1 = new Worker[departments[index].CountWorker+1];
+	for (int i = 0; i < departments[index].CountWorker; i++)
+	{
+		workers1[i]= departments[index].workers[i];
+	}
+	workers1[departments[index].CountWorker].CreateWorker();
+	delete[] departments[index].workers;
+	departments[index].CountWorker++;
+	departments[index].workers = workers1;
+}
 
 void SetColor(int col)
 {
@@ -93,6 +93,7 @@ int Menu(string menu_items[], int SIZE)
 
 int MenuDep(Department* departments)
 {
+	int index;
 	Size_Console(65, 45);
 	string menu[] = { "Department # 1","Department # 2",
 		"Department # 3","Department # 4",
@@ -100,31 +101,27 @@ int MenuDep(Department* departments)
 	int m = Menu(menu, size(menu));
 	if (m == 0)
 	{				
-		cout << "Department number # 1" << endl;
-		departments[0].PrintDepartment();		
+		index = 0;
+		
 	}
 	if (m == 1)
 	{
-		cout << "Department number # 2" << endl;
-		departments[1].PrintDepartment();
+		index = 1;
 	}
 	if (m == 2)
 	{
-		cout << "Department number # 3" << endl;
-		departments[2].PrintDepartment();
+		index = 2;
 	}
 	if (m == 3)
 	{
-		cout << "Department number # 4" << endl;
-		departments[3].PrintDepartment();
+		index = 3;
 	}
 	if (m == 4)
 	{
-		cout << "Department number # 5" << endl;
-		departments[4].PrintDepartment();
+		index = 4;
 	}	
-	system("pause");
-	system("CLS");
+	//system("pause");
+	//system("CLS");
 	return m;
 }
 
@@ -148,12 +145,15 @@ int MainMenu(Department* departments)
 	}
 	if (m == 1)//Add worker
 	{
-		//cout << "Select department"<<endl;		
-		////MenuDep(departments);
-		////system("pause");
-		////system("CLS");
-		//int index = MenuDep(departments);
-		//AddWorker(departments, index);
+		cout << "Select department"<<endl;		
+		//MenuDep(departments);
+		//system("pause");
+		//system("CLS");
+		int index = MenuDep(departments);
+		departments[index].PrintDepartment();
+		cout << "_________________" << endl;
+		AddWorker(departments, index);
+		departments[index].PrintDepartment();
 	}
 	if (m == 2)
 	{

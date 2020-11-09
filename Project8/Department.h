@@ -16,7 +16,7 @@ struct Department
 	void PrintDepartment();//2
 };
 
-/*void AddWorker(Department* departments, int index); */    //3
+void AddWorker(Department* departments, int index);     //3
 
 
 void SetColor(int col);
