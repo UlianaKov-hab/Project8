@@ -1,4 +1,5 @@
 #include "Department.h"
+using namespace std;
 
 void Department::CreateDepartment() //1
 {
@@ -53,7 +54,6 @@ void Size_Console(int x, int y)
 	SMALL_RECT src = { 0, 0, crd.X , crd.Y };
 	SetConsoleWindowInfo(out_handle, true, &src);
 	SetConsoleScreenBufferSize(out_handle, crd);
-
 }
 
 int Menu(string menu_items[], int SIZE)
@@ -65,7 +65,7 @@ int Menu(string menu_items[], int SIZE)
 		key = (key + SIZE) % SIZE;
 		for (int i = 0; i < SIZE; i++)
 		{
-			SetPos(0, i);
+			SetPos(0, 2 + i);
 			if (key == i)
 			{
 
@@ -91,6 +91,44 @@ int Menu(string menu_items[], int SIZE)
 	//return 0;
 }
 
+int MenuDep(Department* departments)
+{
+	Size_Console(65, 45);
+	string menu[] = { "Department # 1","Department # 2",
+		"Department # 3","Department # 4",
+		"Department # 5", "Exit" };
+	int m = Menu(menu, size(menu));
+	if (m == 0)
+	{				
+		cout << "Department number # 1" << endl;
+		departments[0].PrintDepartment();		
+	}
+	if (m == 1)
+	{
+		cout << "Department number # 2" << endl;
+		departments[1].PrintDepartment();
+	}
+	if (m == 2)
+	{
+		cout << "Department number # 3" << endl;
+		departments[2].PrintDepartment();
+	}
+	if (m == 3)
+	{
+		cout << "Department number # 4" << endl;
+		departments[3].PrintDepartment();
+	}
+	if (m == 4)
+	{
+		cout << "Department number # 5" << endl;
+		departments[4].PrintDepartment();
+	}	
+	system("pause");
+	system("CLS");
+	return m;
+}
+
+
 int MainMenu(Department* departments)
 {
 	Size_Console(65, 45);
@@ -99,19 +137,23 @@ int MainMenu(Department* departments)
 		"5.Find worker", "6.Show the number of hours worked by month in the department",
 		"7.Groups with the most privileges", "8.Exit" };
 	int m = Menu(menu, size(menu));
-	if (m == 0)
+	if (m == 0) //Show all workers data
 	{
 		for (int i = 0; i < 5; i++)
 		{
-			//departments[i].CreateDepartment();
 			cout << "Department number # ";
 			cout << i+1 << endl;
 			departments[i].PrintDepartment();
 		}
 	}
-	if (m == 1)
+	if (m == 1)//Add worker
 	{
-		
+		//cout << "Select department"<<endl;		
+		////MenuDep(departments);
+		////system("pause");
+		////system("CLS");
+		//int index = MenuDep(departments);
+		//AddWorker(departments, index);
 	}
 	if (m == 2)
 	{

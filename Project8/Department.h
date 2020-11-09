@@ -16,15 +16,14 @@ struct Department
 	void PrintDepartment();//2
 };
 
-/*void AddWorker(Department* departments, int index); */     //3
-
-
+/*void AddWorker(Department* departments, int index); */    //3
 
 
 void SetColor(int col);
 void SetPos(int x, int y);
 void Size_Console(int x, int y);
 int Menu(string menu_items[], int SIZE);
+int MenuDep(Department* departments);
 int MainMenu(Department* departments);
 
 
