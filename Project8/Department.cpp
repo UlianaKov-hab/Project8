@@ -106,6 +106,22 @@ void FindWorker(Department* departments) //6
 		}
 	}	
 }
+void DepartmentData(Department* departments, int index) //7
+{
+	int count_worked_hours = 0;	
+	int month;	
+	cout << "Enter number of month  ";
+	cin >> month;
+	for (int i = 0; i < departments[index].CountWorker; i++)
+	{				
+		for (int m = 0; m < 12; m++)
+		{					
+			count_worked_hours += departments[index].workers[i].NumberHoursWorked[month - 1];
+		}		
+	}
+	cout << "Department " << index+1 << endl;
+	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;	
+}
 
 void SetColor(int col)
 {
@@ -251,7 +267,9 @@ int MainMenu(Department* departments)
 	}
 	if (m == 5)
 	{
-		
+		cout << "Select department" << endl;
+		int index = MenuDep(departments);
+		DepartmentData(departments, index);
 	}
 	if (m == 6)
 	{
@@ -355,38 +373,10 @@ int MainMenu(Department* departments)
 //
 //
 //	
-//	//FirstNameFind == workers->FirstName /*&& LastNameFind == workers->LastName && PersonalNumberFind == workers->PersonalNumber*/
+//	
 //}
 //
-//void DepartmentData(Department* departments) //7
-//{
-//	int count_worked_hours = 0;
-//	int number;
-//	int month;
-//	cout << "Enter number of department";
-//	cin >> number;
-//	cout << "Enter number of month";
-//	cin >> month;
-//	for (int i = 0; i < 5; i++)
-//	{
-//		if (i != (number-1))
-//		{
-//			continue;
-//		}
-//		else
-//		{
-//			for (int j = 0; j < departments[i].CountWorker; j++)
-//			{
-//				for (int m = 0; m < 12; m++)
-//				{					
-//					count_worked_hours += departments[number-1].workers[j].NumberHoursWorked[month - 1];
-//				}
-//			}
-//		}
-//	}
-//	cout << "Department " << number << endl;
-//	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;	
-//}
+//
 //
 //void Average_amount_no_worked_day_depart_per_year(Department* departments) //9
 //{
