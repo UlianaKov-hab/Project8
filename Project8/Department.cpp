@@ -14,7 +14,7 @@ void Department::CreateDepartment() //1
 void Department::PrintDepartment() //2
 {	
 	for (int i = 0; i < CountWorker; i++)
-	{
+	{		
 		workers[i].PrintWorker();
 		cout << endl;
 	}
@@ -31,6 +31,23 @@ void AddWorker(Department* departments, int index) //3
 	delete[] departments[index].workers;
 	departments[index].CountWorker++;
 	departments[index].workers = workers1;
+}
+void Department::DeleteWorker(int index_worker) //4
+{
+	Worker* workers1 = new Worker[CountWorker];
+	for (int i = 0; i < CountWorker; i++)
+	{
+		if ( index_worker != i)
+		{
+			workers1[i] = workers[i];
+		}
+		else
+		{
+			workers1[i] = workers[i+1];
+		}		
+	}
+	delete[] workers;
+	CountWorker--;
 }
 
 void SortWorkers(Department* departments) //5
@@ -55,7 +72,7 @@ void SortWorkers(Department* departments) //5
 		{
 			if (workers1[j].LastName > workers1[j+1].LastName)
 			{
-				swap(workers1[j].LastName , workers1[j + 1].LastName);
+				swap(workers1[j] , workers1[j + 1]);
 			}
 		}
 	}
@@ -63,28 +80,14 @@ void SortWorkers(Department* departments) //5
 	{
 		workers1[i].PrintWorker();
 		cout << endl;
-	}
-	
-	/*int j;
-	Department temp;
-
-	for (int i = 0; i < departments[index].CountWorker; i++)
-	{
-		j = i - 1;
-		while (j >= 0 && strcmp(departments[index].workers[j + 1].FirstName[0], departments[index].workers[j].FirstName[0]) < 0)
-		{
-			temp = departments[index].workers[j + 1];
-			departments[index].workers[j + 1] = departments[index].workers[j];
-			j--;
-		}
-	}*/
+	}	
 }
 
 void FindWorker(Department* departments) //6
 {
 	string FirstNameFind;
 	string LastNameFind;
-	int PersonalNumberFind;
+	//int PersonalNumberFind;
 
 	cout << "Enter information about the worker to search:" << endl;
 	cout << "First name: ";
@@ -122,6 +125,24 @@ void DepartmentData(Department* departments, int index) //7
 	cout << "Department " << index+1 << endl;
 	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;	
 }
+void Department::SumHoursWorker(int index_worker) //8
+{
+	int count_worked_hours = 0;
+
+	
+	//for (int i = 0; i < departments[index].CountWorker; i++)
+	//{
+		for (int m = 0; m < 12; m++)
+		{
+			count_worked_hours += workers[index_worker].NumberHoursWorked[m];
+			count_worked_hours += workers[index_worker].NumberHoursWorked[m];
+		}
+	//}
+	//cout << "Department " << index + 1 << endl;
+		workers[index_worker].PrintWorker();
+	cout << "Number of hours worked per year " <<  count_worked_hours << endl;
+}
+
 
 void SetColor(int col)
 {
@@ -181,38 +202,47 @@ int Menu(string menu_items[], int SIZE)
 	//return 0;
 }
 
-int MenuDep(Department* departments)
+int MenuWorker(Worker* workers, int size)
 {
-	int index;
+	int key = 0;
+	int code;
+	do {
+		system("cls");
+		key = (key + size) % size;
+		for (int i = 0; i < size; i++)
+		{
+			if (key == i)
+			{
+				SetColor(6);  workers[i].PrintWorker(); SetColor(3); SetColor(15);
+				cout << endl;
+			}
+			else
+			{
+				workers[i].PrintWorker();
+				cout << endl;
+			}
+		}
+		code = _getch();
+		if (code == 224)
+		{
+			code = _getch();
+			if (code == 80) key++;
+			if (code == 72) key--;
+		}
+	} while (code != 13);
+	system("cls");
+	return key;
+}
+
+int MenuDep(Department* departments)
+{	
 	Size_Console(65, 45);
 	string menu[] = { "Department # 1","Department # 2",
 		"Department # 3","Department # 4",
 		"Department # 5", "Exit" };
-	int m = Menu(menu, size(menu));
-	if (m == 0)
-	{				
-		index = 0;
-		
-	}
-	if (m == 1)
-	{
-		index = 1;
-	}
-	if (m == 2)
-	{
-		index = 2;
-	}
-	if (m == 3)
-	{
-		index = 3;
-	}
-	if (m == 4)
-	{
-		index = 4;
-	}	
-	//system("pause");
-	//system("CLS");
-	return m;
+	int index = Menu(menu, size(menu));
+	
+	return index;
 }
 
 
@@ -222,37 +252,38 @@ int MainMenu(Department* departments)
 	string menu[] = { "1.Show all workers data","2.Add worker",
 		"3.Delete worker","4.Sort workers by Last Name",
 		"5.Find worker", "6.Show the number of hours worked by month in the department",
-		"7.Groups with the most privileges", "8.Exit" };
+		"7.Number of hours worked per year of the worker", "8.Exit" };
 	int m = Menu(menu, size(menu));
 	if (m == 0) //Show all workers data
 	{
 		for (int i = 0; i < 5; i++)
 		{
-			cout << "Department number # ";
-			cout << i+1 << endl;
+			cout << "* D E P A R T M E N T   # " << i + 1 <<" *"<< endl;
+			cout <<  endl;			
 			departments[i].PrintDepartment();
 		}
 	}
 	if (m == 1)//Add worker
 	{
 		cout << "Select department"<<endl;		
-		//MenuDep(departments);
-		//system("pause");
-		//system("CLS");
+		
 		int index = MenuDep(departments);
+		cout << "* D E P A R T M E N T   # " << index + 1 << " *" << endl;
 		departments[index].PrintDepartment();
-		cout << "_________________" << endl;
+		system("pause");
+		system("CLS");
+		
 		AddWorker(departments, index);
+		cout << "* D E P A R T M E N T   # " << index + 1 << " *" << endl;
 		departments[index].PrintDepartment();
 	}
 	if (m == 2) //DeletWorcer
 	{
 		cout << "Select department" << endl;
-		int index = MenuDep(departments);
-		departments[index].PrintDepartment();
-		cout << "_________________" << endl;
-
-		
+		int index = MenuDep(departments);		
+		int index_worker = MenuWorker(departments[index].workers, departments[index].CountWorker);
+		departments[index].DeleteWorker(index_worker);
+		//departments[index].PrintDepartment();
 	}
 	if (m == 3) //Sort workers
 	{
@@ -273,8 +304,11 @@ int MainMenu(Department* departments)
 	}
 	if (m == 6)
 	{
-		
-
+		cout << "Select department" << endl;
+		int index = MenuDep(departments);		
+		int index_worker = MenuWorker(departments[index].workers, departments[index].CountWorker);
+		//SumHoursWorker(departments, index, index_worker);		
+		departments[index].SumHoursWorker(index_worker);
 	}
 	system("pause");
 	system("CLS");
@@ -349,25 +383,7 @@ int MainMenu(Department* departments)
 //	system("cls");
 //	return key;
 //}
-//void DeleteWorker(Department* departments, int index, int dismiss) //4
-//{
-//
-//	Worker* workers1 = new Worker[departments[index].CountWorker - 1];
-//	for (int i = 0; i < departments[index].CountWorker; i++)
-//	{
-//		if (dismiss != departments[index].workers->PersonalNumber)
-//		{
-//			workers1[i] = departments[index].workers[i];
-//		}
-//		else
-//		{
-//			workers1[i] = departments[index].workers[i+1];
-//		}
-//		
-//	}
-//	delete[] departments[index].workers;
-//	departments[index].CountWorker--;
-//}
+
 //
 
 //

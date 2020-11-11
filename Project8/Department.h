@@ -17,6 +17,8 @@ struct Department
 	Worker* workers;	
 	void CreateDepartment();//1
 	void PrintDepartment();//2
+	void DeleteWorker(int index_worker); //4
+	void SumHoursWorker(int index_worker); //8
 };
 
 void AddWorker(Department* departments, int index);     //3
