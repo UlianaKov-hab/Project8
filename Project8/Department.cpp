@@ -192,6 +192,23 @@ void Count_no_worked_day_by_month(Department* departments) //10
 		cout << endl;
 	}
 }
+void Count_no_worked_day_per_year(Department* departments)
+{
+	int count_no_worked_day_per_year=0;
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < departments[i].CountWorker; j++)
+		{
+			for (int m = 0; m < 12; m++)
+			{
+				count_no_worked_day_per_year+= departments[i].workers[j].NumberDaysNoWorked[m];
+			}
+		}
+	}
+	cout << "Total days not worked per year: " << count_no_worked_day_per_year << endl;
+
+}
+
 
 
 void SetColor(int col)
@@ -303,7 +320,7 @@ int MainMenu(Department* departments)
 		"3.Delete worker","4.Sort workers by Last Name",
 		"5.Find worker", "6.Show the number of hours worked by month in the department",
 		"7.Number of hours worked per year of the worker", "8.Average amount no worked day in department",
-		"9.Count no worked day by month","0.Exit" };
+		"9.Count no worked day by month", "10.Count no worked day per year", "11.", "0.Exit" };
 	int m = Menu(menu, size(menu));
 	if (m == 0) //Show all workers data
 	{
@@ -370,6 +387,14 @@ int MainMenu(Department* departments)
 	if (m == 8)
 	{
 		Count_no_worked_day_by_month(departments);
+	}
+	if (m == 9)
+	{
+		Count_no_worked_day_per_year( departments);
+	}
+	if (m == 10)
+	{
+		//Count_no_worked_day_per_year(departments);
 	}
 	system("pause");
 	system("CLS");
@@ -450,22 +475,6 @@ int MainMenu(Department* departments)
 //
 
 //
-//void Count_no_worked_day_per_year(Department* departments)
-//{
-//	int count_no_worked_day_per_year=0;
-//	for (int i = 0; i < 5; i++)
-//	{
-//		for (int j = 0; j < departments[i].CountWorker; j++)
-//		{
-//			for (int m = 0; m < 12; m++)
-//			{
-//				count_no_worked_day_per_year+= departments[i].workers[j].NumberDaysNoWorked[m];
-//			}
-//		}
-//	}
-//	cout << "Total days not worked per year: " << count_no_worked_day_per_year << endl;
-//
-//}
 
 
 //for (int i = 0; i < 5; i++)
