@@ -33,6 +33,80 @@ void AddWorker(Department* departments, int index) //3
 	departments[index].workers = workers1;
 }
 
+void SortWorkers(Department* departments) //5
+{
+	int count_workers = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		count_workers+=departments[i].CountWorker;				
+	}
+	cout << count_workers << endl;
+	Worker* workers1 = new Worker[count_workers];
+	for (int i = 0, k=0; i < 5; i++)
+	{
+		for (int j = 0; j < departments[i].CountWorker; j++, k++)
+		{
+			workers1[k] = departments[i].workers[j];
+		}
+	}
+	for (int i = 0; i < count_workers; i++)
+	{
+		for (int j = 0; j < count_workers-1; j++)
+		{
+			if (workers1[j].LastName > workers1[j+1].LastName)
+			{
+				swap(workers1[j].LastName , workers1[j + 1].LastName);
+			}
+		}
+	}
+	for (int i = 0; i < count_workers; i++)
+	{
+		workers1[i].PrintWorker();
+		cout << endl;
+	}
+	
+	/*int j;
+	Department temp;
+
+	for (int i = 0; i < departments[index].CountWorker; i++)
+	{
+		j = i - 1;
+		while (j >= 0 && strcmp(departments[index].workers[j + 1].FirstName[0], departments[index].workers[j].FirstName[0]) < 0)
+		{
+			temp = departments[index].workers[j + 1];
+			departments[index].workers[j + 1] = departments[index].workers[j];
+			j--;
+		}
+	}*/
+}
+
+void FindWorker(Department* departments) //6
+{
+	string FirstNameFind;
+	string LastNameFind;
+	int PersonalNumberFind;
+
+	cout << "Enter information about the worker to search:" << endl;
+	cout << "First name: ";
+	cin >> FirstNameFind;
+	cout << "Last name: ";
+	cin >> LastNameFind;
+	//cout << "Personal number: ";
+	//cin >> PersonalNumberFind;
+	cout << endl;
+	system("CLS");
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < departments[i].CountWorker; j++)
+		{
+			if (departments[i].workers[j].FirstName == FirstNameFind && departments[i].workers[j].LastName == LastNameFind)
+			{
+				departments[i].workers[j].PrintWorker();
+			}
+		}
+	}	
+}
+
 void SetColor(int col)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), col);
@@ -130,7 +204,7 @@ int MainMenu(Department* departments)
 {
 	Size_Console(65, 45);
 	string menu[] = { "1.Show all workers data","2.Add worker",
-		"3.Delete worker","4.Sort workers",
+		"3.Delete worker","4.Sort workers by Last Name",
 		"5.Find worker", "6.Show the number of hours worked by month in the department",
 		"7.Groups with the most privileges", "8.Exit" };
 	int m = Menu(menu, size(menu));
@@ -155,19 +229,25 @@ int MainMenu(Department* departments)
 		AddWorker(departments, index);
 		departments[index].PrintDepartment();
 	}
-	if (m == 2)
+	if (m == 2) //DeletWorcer
 	{
+		cout << "Select department" << endl;
+		int index = MenuDep(departments);
+		departments[index].PrintDepartment();
+		cout << "_________________" << endl;
+
 		
 	}
-	if (m == 3)
+	if (m == 3) //Sort workers
 	{
 		
-
+		SortWorkers(departments);
+		
 	}
 	if (m == 4)
 	{
 		
-
+		FindWorker(departments);
 	}
 	if (m == 5)
 	{
@@ -271,44 +351,9 @@ int MainMenu(Department* departments)
 //	departments[index].CountWorker--;
 //}
 //
-//void SortWorkers(Department* departments, int index) //5
-//{
-//	for (int i = 0; i < 5; i++)
-//	{
-//		for (int j = 0; j < departments[index].CountWorker - 1 - i; j++)
-//		{
-//			if (departments[index].workers->LastName[j] > departments[index].workers->LastName[j + 1])
-//			{
-//				swap(departments[index].workers->LastName[j], departments[index].workers->LastName[j + 1]);
-//			}
-//		}
-//	}
-//}
+
 //
-//void FindWorker(Department* departments) //6
-//{
-//	string FirstNameFind;
-//	string LastNameFind;
-//	int PersonalNumberFind;
 //
-//	cout << "Enter information about the worker to search:"<<endl;
-//	cout << "First name: ";
-//	cin >> FirstNameFind;	
-//	cout << "Last name: ";
-//	cin >> LastNameFind;	
-//	cout << "Personal number: ";
-//	cin >> PersonalNumberFind;	
-//
-//	for (int i = 0; i < 5; i++)
-//	{
-//		for (int j = 0; j < departments[i].CountWorker; j++)
-//		{
-//			if (departments[i].workers[j].PersonalNumber == PersonalNumberFind)
-//			{
-//				departments[i].workers[j].PrintWorker();
-//			}			
-//		}
-//	}
 //	
 //	//FirstNameFind == workers->FirstName /*&& LastNameFind == workers->LastName && PersonalNumberFind == workers->PersonalNumber*/
 //}

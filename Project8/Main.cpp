@@ -6,7 +6,8 @@ using namespace std;
 void main()
 {
 	//srand(time(0));
-	Department* departments = new Department[5];
+	int size = 5;
+	Department* departments = new Department[size];
 
 	for (int i = 0; i < 5; i++)
 	{

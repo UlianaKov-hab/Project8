@@ -6,6 +6,9 @@
 #include <conio.h>
 #include<fstream>
 #include <windows.h>
+//#include <algorithm>
+//#include <vector>
+
 
 using namespace std;
 struct Department
