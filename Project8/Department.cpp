@@ -1,7 +1,7 @@
 #include "Department.h"
 using namespace std;
 
-void Department::CreateDepartment() //1
+void Department::CreateDepartment() 
 {
 	CountWorker = 1 + rand() % 5;
 	workers = new Worker[CountWorker];
@@ -11,7 +11,7 @@ void Department::CreateDepartment() //1
 	}	
 }
 
-void Department::PrintDepartment() //2
+void Department::PrintDepartment() 
 {	
 	for (int i = 0; i < CountWorker; i++)
 	{		
@@ -20,7 +20,7 @@ void Department::PrintDepartment() //2
 	}
 	cout << "----------------------------------" << endl;
 }
-void AddWorker(Department* departments, int index) //3
+void AddWorker(Department* departments, int index) //2
 {
 	Worker* workers1 = new Worker[departments[index].CountWorker+1];
 	for (int i = 0; i < departments[index].CountWorker; i++)
@@ -32,25 +32,26 @@ void AddWorker(Department* departments, int index) //3
 	departments[index].CountWorker++;
 	departments[index].workers = workers1;
 }
-void Department::DeleteWorker(int index_worker) //4
+void Department::DeleteWorker(int index_worker) //3
 {
-	Worker* workers1 = new Worker[CountWorker];
+	Worker* workers1 = new Worker[CountWorker-1];
+	CountWorker--;
 	for (int i = 0; i < CountWorker; i++)
 	{
-		if ( index_worker != i)
+		if ( i < index_worker)
 		{
 			workers1[i] = workers[i];
 		}
-		else
+		else if (i >= index_worker)
 		{
 			workers1[i] = workers[i+1];
 		}		
 	}
 	delete[] workers;
-	CountWorker--;
+	workers = workers1;	
 }
 
-void SortWorkers(Department* departments) //5
+void SortWorkers(Department* departments) //4
 {
 	int count_workers = 0;
 	for (int i = 0; i < 5; i++)
@@ -83,7 +84,7 @@ void SortWorkers(Department* departments) //5
 	}	
 }
 
-void FindWorker(Department* departments) //6
+void FindWorker(Department* departments) //5
 {
 	string FirstNameFind;
 	string LastNameFind;
@@ -97,7 +98,7 @@ void FindWorker(Department* departments) //6
 	//cout << "Personal number: ";
 	//cin >> PersonalNumberFind;
 	cout << endl;
-	system("CLS");
+	system("CLS");	
 	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < departments[i].CountWorker; j++)
@@ -105,64 +106,76 @@ void FindWorker(Department* departments) //6
 			if (departments[i].workers[j].FirstName == FirstNameFind && departments[i].workers[j].LastName == LastNameFind)
 			{
 				departments[i].workers[j].PrintWorker();
-			}
-		}
+			}			
+		}		
 	}	
 }
-void DepartmentData(Department* departments, int index) //7
+void DepartmentData(Department* departments, int index) //6
 {
 	int count_worked_hours = 0;	
 	int month;	
-	cout << "Enter number of month  ";
-	cin >> month;
-	for (int i = 0; i < departments[index].CountWorker; i++)
-	{				
-		for (int m = 0; m < 12; m++)
-		{					
-			count_worked_hours += departments[index].workers[i].NumberHoursWorked[month - 1];
-		}		
-	}
-	cout << "* D E P A R T M E N T   # " << index + 1 << " *" << endl;
-	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;	
-}
-void Department::SumHoursWorker(int index_worker) //8
-{
-	int count_worked_hours = 0;
-
-	
-	//for (int i = 0; i < departments[index].CountWorker; i++)
-	//{
-		for (int m = 0; m < 12; m++)
-		{
-			count_worked_hours += workers[index_worker].NumberHoursWorked[m];
-			count_worked_hours += workers[index_worker].NumberHoursWorked[m];
-		}
-	//}
-	//cout << "Department " << index + 1 << endl;
-		workers[index_worker].PrintWorker();
-	cout << "Number of hours worked per year " <<  count_worked_hours << endl;
-}
-void Average_amount_no_worked_day_depart_per_year(Department* departments, int index) //9
-{
-	
-	float sum;
-	float average_amount_no_worked_day_depart[5];
-	//for (int i = 0; i < 5; i++)
-	//{
-		sum = 0;
-		for (int j = 0; j < departments[index].CountWorker; j++)
+	bool a = true;
+	do
+	{
+		cout << "Enter number of month  ";
+		cin >> month;
+		for (int i = 0; i < departments[index].CountWorker; i++)
 		{
 			for (int m = 0; m < 12; m++)
 			{
-				sum+= departments[index].workers[j].NumberDaysNoWorked[m];
+				count_worked_hours += departments[index].workers[i].NumberHoursWorked[month - 1];
 			}
-		}
-		average_amount_no_worked_day_depart[index] = sum/ departments[index].CountWorker/12;
-	//}
-	
-		cout << "Average amount no worked day in department # " << index + 1 << " per year: " << sum / departments[index].CountWorker << endl;
+		}	
+	cout << "* D E P A R T M E N T   # " << index + 1 << " *" << endl;
+	cout << "Number of hours worked in "<< month<<" months: " << count_worked_hours << endl;
+	cout <<  endl;
+	cout << "Next month? - press 1"<<endl;
+	cout << "Exit - press 0" << endl;	
+	cin >> a;
+	//system("pause");
+	system("CLS");
+	} while (a == true);
 }
-void Count_no_worked_day_by_month(Department* departments) //10
+void Department::SumHoursWorker(int index_worker) //7
+{
+	int count_worked_hours = 0;	
+	
+	for (int m = 0; m < 12; m++)
+	{
+		count_worked_hours += workers[index_worker].NumberHoursWorked[m];			
+	}	
+	workers[index_worker].PrintWorker();
+	cout << endl;
+	cout << "Number of hours worked per year " <<  count_worked_hours << endl;
+	cout << endl;
+}
+void Department::Change_worker_position(int index_worker)//11
+{
+	string new_position;
+	cout << "Enter new worker position ";
+	getline(cin, new_position);
+	workers[index_worker].Position = new_position;
+	PrintDepartment();
+
+}
+void Average_amount_no_worked_day_depart_per_year(Department* departments, int index) //8
+{	
+	float sum;
+	float average_amount_no_worked_day_depart[5];
+	sum = 0;
+	for (int j = 0; j < departments[index].CountWorker; j++)
+	{
+		for (int m = 0; m < 12; m++)
+		{
+			sum+= departments[index].workers[j].NumberDaysNoWorked[m];
+		}
+	}
+	average_amount_no_worked_day_depart[index] = sum/ departments[index].CountWorker/12;
+	cout << endl;
+	cout << "Average amount no worked day in department # " << index + 1 << " per year: " << sum / departments[index].CountWorker << endl;
+	cout << endl;
+}
+void Count_no_worked_day_by_month(Department* departments) //9
 {
 	int no_worked_day_by_month[5][12];
 	int sum;
@@ -180,19 +193,30 @@ void Count_no_worked_day_by_month(Department* departments) //10
 		}			
 	}
 	cout << "Number no worked days per mohths"<<endl;
+	cout << endl;
+	cout << endl;
+	for (int m = 0; m < 12; m++)
+	{
+		cout << setw(4) << m+1 << " ";
+		
+	}
+	cout << " Month" << endl;
+	cout << endl;
+	cout << endl;
+	
 	
 	for (int i = 0; i < 5; i++)
 	{
-		cout << "* D E P A R T M E N T   # " << i + 1 << " *" << endl;
+		cout << "         * D E P A R T M E N T   # " << i + 1 << " *" << endl;		
 		for (int m = 0; m < 12; m++)
 		{
-			cout<<setw(3)<<no_worked_day_by_month[i][m]<<" ";
+			cout<<setw(4)<<no_worked_day_by_month[i][m]<<" ";
 		}
 		cout << endl;
 		cout << endl;
 	}
 }
-void Count_no_worked_day_per_year(Department* departments)
+void Count_no_worked_day_per_year(Department* departments)//10
 {
 	int count_no_worked_day_per_year=0;
 	for (int i = 0; i < 5; i++)
@@ -206,10 +230,8 @@ void Count_no_worked_day_per_year(Department* departments)
 		}
 	}
 	cout << "Total days not worked per year: " << count_no_worked_day_per_year << endl;
-
+	cout << endl;
 }
-
-
 
 void SetColor(int col)
 {
@@ -320,7 +342,7 @@ int MainMenu(Department* departments)
 		"3.Delete worker","4.Sort workers by Last Name",
 		"5.Find worker", "6.Show the number of hours worked by month in the department",
 		"7.Number of hours worked per year of the worker", "8.Average amount no worked day in department",
-		"9.Count no worked day by month", "10.Count no worked day per year", "11.", "0.Exit" };
+		"9.Count no worked day by month", "10.Count no worked day per year", "11.Change worker position", "0.Exit" };
 	int m = Menu(menu, size(menu));
 	if (m == 0) //Show all workers data
 	{
@@ -351,17 +373,16 @@ int MainMenu(Department* departments)
 		int index = MenuDep(departments);		
 		int index_worker = MenuWorker(departments[index].workers, departments[index].CountWorker);
 		departments[index].DeleteWorker(index_worker);
-		//departments[index].PrintDepartment();
+		/*system("pause");
+		system("CLS");	*/	
+		departments[index].PrintDepartment();
 	}
 	if (m == 3) //Sort workers
-	{
-		
-		SortWorkers(departments);
-		
+	{		
+		SortWorkers(departments);		
 	}
 	if (m == 4)
-	{
-		
+	{		
 		FindWorker(departments);
 	}
 	if (m == 5)
@@ -394,96 +415,17 @@ int MainMenu(Department* departments)
 	}
 	if (m == 10)
 	{
-		//Count_no_worked_day_per_year(departments);
+		cout << "Select department" << endl;
+		int index = MenuDep(departments);
+		int index_worker = MenuWorker(departments[index].workers, departments[index].CountWorker);
+		departments[index].Change_worker_position(index_worker);
 	}
+	/*if (m == 11)
+	{
+		return 13;
+	}*/
+	
 	system("pause");
 	system("CLS");
 	return m;
 }
-
-
-
-//int menuWorker(Departament* departaments)
-//{
-//	int key = 0;
-//	int code;
-//	do {
-//		system("cls");
-//
-//		key = (key + CountWorker) % CountWorker;
-//
-//		for (int i = 0; i < CountWorker; i++)
-//		{
-//			if (key == i)
-//			{
-//
-//				SetColor(6);  workers[i].PrintWorker(); SetColor(3); SetColor(15);
-//			}
-//			else
-//			{
-//				workers[i].PrintWorker();
-//			}
-//
-//		}
-//		code = _getch();
-//		if (code == 224)
-//		{
-//			code = _getch();
-//			if (code == 80) key++;
-//			if (code == 72) key--;
-//		}
-//	} while (code != 13);
-//	system("cls");
-//	return key;
-//}
-//int menuWorker(Worker* workers, int CountWorker)
-//{
-//	int key = 0;
-//	int code;
-//	do {
-//		system("cls");
-//
-//		key = (key + CountWorker) % CountWorker;
-//
-//		for (int i = 0; i < CountWorker; i++)
-//		{
-//			if (key == i)
-//			{
-//
-//				SetColor(6);  workers[i].PrintWorker(); SetColor(3); SetColor(15);
-//			}
-//			else
-//			{
-//				workers[i].PrintWorker();
-//			}
-//
-//		}
-//		code = _getch();
-//		if (code == 224)
-//		{
-//			code = _getch();
-//			if (code == 80) key++;
-//			if (code == 72) key--;
-//		}
-//	} while (code != 13);
-//	system("cls");
-//	return key;
-//}
-
-
-
-//
-
-//
-
-
-//for (int i = 0; i < 5; i++)
-//{
-//	for (int j = 0; j < CountWorker; j++)
-//	{
-//		for (int m = 0; m < 12; m++)
-//		{
-//
-//		}
-//	}
-//}
